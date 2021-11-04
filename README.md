@@ -1,2 +1,2 @@
-# kong-deck-pr-review
-A sample repository, with pipeline, that runs deck diff against the configured Kong repository.
+# Kong decK PR Review
+A sample repository, with Jenkins pipeline, that runs deck diff against the configured Kong repository.
