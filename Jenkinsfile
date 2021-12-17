@@ -326,6 +326,10 @@ pipeline {
                     sh 'rm -rf workspaces/datamgmt/specs ; mkdir -p workspaces/datamgmt/specs'
 
                     API_SPECS.each {
+                        // Set the Kong URL in the servers block
+                        sh "sed -i 's/http/https/g' api/${it}"
+                        sh "sed -i 's/apps.svc.cluster.local/k8.local/g' api/${it}"
+
                         // Add all the API specs
                         sh "cp api/${it} workspaces/datamgmt/specs/${it}"
                     }

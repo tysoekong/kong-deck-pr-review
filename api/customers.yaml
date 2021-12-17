@@ -5,7 +5,7 @@ info:
   description: A simple API to get customer data
 
 servers:
-  - url: https://customers.api.k8.local
+  - url: http://customer-api.apps.svc.cluster.local
 
 paths:
   /customers/{customer_id}:
