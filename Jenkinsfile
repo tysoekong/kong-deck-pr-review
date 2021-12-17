@@ -151,7 +151,7 @@ pipeline {
             }
         }
 
-        stage("Lint API Specs") {
+        stage("Lint API Specs MAIN") {
             when {
                 anyOf {
                     branch "main"
@@ -230,7 +230,7 @@ pipeline {
             }
         }
 
-        stage("Generate Declarative Kongfig") {
+        stage("Generate Declarative Kongfig MAIN") {
             when {
                 anyOf {
                     branch "main"
