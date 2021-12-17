@@ -311,6 +311,27 @@ pipeline {
             }
         }
 
+        stage('Portal Sync') {
+            when {
+                allOf {
+                    branch "main"
+                    expression { LINT_PASSED == true }
+                }
+            }
+            steps {
+                script {
+                    // Download portal markup
+                    sh 'KONG_ADMIN_URL=$DECK_KONG_ADDR KONG_ADMIN_TOKEN=$DECK_RBAC_TOKEN portal init datamgmt'
+                    sh 'KONG_ADMIN_URL=$DECK_KONG_ADDR KONG_ADMIN_TOKEN=$DECK_RBAC_TOKEN portal fetch datamgmt'
+                    
+                    API_SPECS.each {
+                        // Add all the API specs
+                    }
+                    // Upload the portal markup
+                }
+            }
+        }
+
         // Download portal markup
         // Add all the API specs
         // Upload the portal markup
