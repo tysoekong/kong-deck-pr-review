@@ -5,7 +5,7 @@ info:
   description: A simple API to get customer data
 
 servers:
-  - url: http://customer-api.apps.svc.cluster.local
+  - url: http://customer-api.apps.svc.cluster.local:8080
 
 paths:
   /customers/{customer_id}:
