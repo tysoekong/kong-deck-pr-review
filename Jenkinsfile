@@ -102,7 +102,6 @@ pipeline {
             when {
                 anyOf {
                     changeRequest()
-                    branch "main"
                 }
             }
 
@@ -152,11 +151,36 @@ pipeline {
             }
         }
 
+        stage("Lint API Specs") {
+            when {
+                anyOf {
+                    branch "main"
+                }
+            }
+
+            steps {
+                script {
+                    def anyFailure = false
+                    API_SPECS.each {
+                        def returnCode = sh returnStatus:true, script:"inso lint spec api/${it} > out.txt"
+                        
+                        if (returnCode > 0) {
+                            echo "Spec ${it} failed linting"
+                            anyFailure = true
+                        }
+                    }
+
+                    if (anyFailure) {
+                        error("One or more API Specs failed linting")
+                    }
+                }
+            }
+        }
+
         stage("Generate Declarative Kongfig") {
             when {
                 anyOf {
                     changeRequest()
-                    branch "main"
                 }
             }
 
@@ -201,6 +225,32 @@ pipeline {
                                 description: 'Generate Declarative Config',
                                 targetUrl: "${env.JOB_URL}/testResults")
                         LINT_PASSED = true
+                    }
+                }
+            }
+        }
+
+        stage("Generate Declarative Kongfig") {
+            when {
+                anyOf {
+                    branch "main"
+                }
+            }
+
+            steps {
+                script {
+                    def anyFailure = false
+                    API_SPECS.each {
+                        def returnCode = sh returnStatus:true, script:"inso generate config api/${it} > api/${it}.kong.yaml"
+                        
+                        if (returnCode > 0) {
+                            anyFailure = true
+                        }
+                        sh "rm -f out.txt"
+                    }
+                    
+                    if (anyFailure) {
+                        error("One or more API Specs failed to generate config")
                     }
                 }
             }
