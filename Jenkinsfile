@@ -252,6 +252,8 @@ pipeline {
                     if (anyFailure) {
                         error("One or more API Specs failed to generate config")
                     }
+
+                    LINT_PASSED = true
                 }
             }
         }
