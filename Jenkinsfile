@@ -323,13 +323,13 @@ pipeline {
                     // Download portal markup
                     sh 'KONG_ADMIN_URL=$DECK_KONG_ADDR KONG_ADMIN_TOKEN=$DECK_RBAC_TOKEN portal init datamgmt'
                     sh 'KONG_ADMIN_URL=$DECK_KONG_ADDR KONG_ADMIN_TOKEN=$DECK_RBAC_TOKEN portal fetch datamgmt'
-                    sh 'mkdir -p workspaces/datamgmt/specs'
+                    sh 'rm -rf workspaces/datamgmt/specs ; mkdir -p workspaces/datamgmt/specs'
 
                     API_SPECS.each {
                         // Add all the API specs
                         sh "cp api/${it} workspaces/datamgmt/specs/${it}"
                     }
-                    
+
                     // Upload the portal markup
                     sh 'KONG_ADMIN_URL=$DECK_KONG_ADDR KONG_ADMIN_TOKEN=$DECK_RBAC_TOKEN portal deploy datamgmt'
                 }
