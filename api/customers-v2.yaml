@@ -8,7 +8,7 @@ servers:
   - url: http://customer-api-v2.apps.svc.cluster.local:8080
 
 paths:
-  /customers/{customer_id}:
+  /v2/customers/{customer_id}:
     get:
       description: Returns a customer 
       parameters:
@@ -28,7 +28,7 @@ paths:
                   $ref: '#/components/schemas/Customer'
         '400':
           $ref: '#/components/responses/400Error'
-  /customers:
+  /v2/customers:
     post:
       description: Lets a user post a new artist
       requestBody:
