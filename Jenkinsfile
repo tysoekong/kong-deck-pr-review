@@ -47,7 +47,7 @@ pipeline {
     agent "any"
 
     environment {
-        DECK_KONG_ADDR = "http://kong-kong-admin.kong.svc.cluster.local:8001"
+        DECK_KONG_ADDR = "http://kong-admin.k3s.jack.local"
         DECK_RBAC_TOKEN = credentials('kong-rbac-token')
         DECK_WORKSPACE = "datamgmt"
     }
